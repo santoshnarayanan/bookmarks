@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+
+# access .env parameters
 from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -73,6 +75,7 @@ WSGI_APPLICATION = 'bookmarks.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+# Commented for Sqlite3.db
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.sqlite3',
@@ -80,6 +83,7 @@ WSGI_APPLICATION = 'bookmarks.wsgi.application'
 #     }
 # }
 
+# Postgres settings
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -130,8 +134,14 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# Authentication cycle
 LOGIN_REDIRECT_URL = 'dashboard'
 LOGIN_URL = 'login'
 LOGOUT_URL = 'logout'
 
+# simulate Email sending the output on console
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# enable Django to manage file uploads and serve media files
+MEDIA_URL = 'media/'
+MEDIA_ROOT = BASE_DIR / 'media'
