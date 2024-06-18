@@ -145,3 +145,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # enable Django to manage file uploads and serve media files
 MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'account.authentication.EmailAuthBackend',
+]
