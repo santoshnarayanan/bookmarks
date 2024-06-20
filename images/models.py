@@ -13,9 +13,11 @@ class Image(models.Model):
     title = models.CharField(max_length=200)
     slug = models.SlugField(max_length=200, blank=True)
     url = models.URLField(max_length=2000)
-    description = models.TextField(blank=True)
     image = models.ImageField(upload_to='images/%Y/%m/%d/')
-    created_at = models.DateTimeField(auto_now_add=True)
+    description = models.TextField(blank=True)
+    created = models.DateTimeField(auto_now_add=True)
+    # defined many-to-many relationships
+    users_like = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='images_liked', blank=True)
 
     class Meta:
         indexes = [models.Index(fields=['-created']), ]
