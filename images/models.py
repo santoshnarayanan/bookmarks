@@ -30,6 +30,7 @@ class Image(models.Model):
     override save function to automatically generate the slug field based
     on the value of the title field
     """
+
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.title)
