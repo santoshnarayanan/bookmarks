@@ -1,0 +1,22 @@
+{% comment %}you iterate over images and generate a square thumbnail for each image.
+You normalize the size of the thumbnails to 300x300 pixels.
+You also use the smart cropping option. This option indicates that the
+image has to be incrementally cropped down to the requested size by
+removing slices from the edges with the least entropy.{% endcomment %}
+
+{% load thumbnail %}
+{% for image in images %}
+    <div class="image">
+        <a href="{{ image.get_absolute_url }}">
+            {% thumbnail image.image 300x300 crop="smart" as im %}
+            <a href="{{ image.get_absolute_url }}">
+                <img src="{{ im.url }}" alt="image url">
+            </a>
+        </a>
+        <div class="info">
+            <a href="{{ image.get_absolute_url }}" class="title">
+                {{ image.title }}
+            </a>
+        </div>
+    </div>
+{% endfor %}
