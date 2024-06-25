@@ -10,24 +10,24 @@
     <link href="{% static "css/base.css" %}" rel="stylesheet">
 </head>
 <body>
-    <div id="header">
-        <span class="logo">Bookmarks</span>
-        {% if request.user.is_authenticated %}
-        	<ul class="menu">
-                <li {% if section == 'dashboard' %} class="selected" {% endif %} >
-                    <a href="{% url "dashboard" %}">My dashboard</a>
-                </li>
-                <li {% if section == 'images' %} class="selected" {% endif %} >
-                    <a href="#">Images</a>
-                </li>
-                 <li {% if section == 'people' %} class="selected" {% endif %} >
-                    <a href="#">People</a>
-                </li>
-            </ul>
-        {% endif %}
-        <span class="user">
+<div id="header">
+    <span class="logo">Bookmarks</span>
+    {% if request.user.is_authenticated %}
+        <ul class="menu">
+            <li {% if section == 'dashboard' %} class="selected" {% endif %} >
+                <a href="{% url "dashboard" %}">My dashboard</a>
+            </li>
+            <li {% if section == 'images' %} class="selected" {% endif %} >
+                <a href="#">Images</a>
+            </li>
+            <li {% if section == 'people' %} class="selected" {% endif %} >
+                <a href="#">People</a>
+            </li>
+        </ul>
+    {% endif %}
+    <span class="user">
             {% if request.user.is_authenticated %}
-            	Hello {{ request.user.first_name|default:request.user.username }},
+                Hello {{ request.user.first_name|default:request.user.username }},
                 <form action="{% url 'logout' %}" method="post">
                     <button type="submit">Logout</button>
                     {% csrf_token %}
@@ -36,25 +36,27 @@
                 <a href="{% url "login" %}">Log-in</a>
             {% endif %}
         </span>
-    </div>
-    {% if messages %}
-    	<ul class="messages">
-            {% for message in messages %}
-            	<li class="{{ message.tags }}">
-                    {{ message|safe }}
+</div>
+{% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li class="{{ message.tags }}">
+                {{ message|safe }}
                 <a href="#" class="close">x</a>
-                </li>
-            {% endfor %}
+            </li>
+        {% endfor %}
 
-        </ul>
-    {% endif %}
-    <div id="content">
-        {% block content %}
-        	
-        {% endblock %}
-    </div>
+    </ul>
+{% endif %}
+<div id="content">
+    {% block content %}
+
+    {% endblock %}
+</div>
+<script src="//cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
 <script>
-    document.addEventListener('DOMContentLoaded',(event) => {
+    const csrftoken = Cookies.get('csrftoken');
+    document.addEventListener('DOMContentLoaded', (event) => {
         //DOM loaded
         {% block domready %}
 
