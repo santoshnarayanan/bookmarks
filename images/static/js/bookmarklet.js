@@ -1,7 +1,7 @@
-const siteUrl = '//127.0.0.1:8080/';
-const styleUrl = siteUrl + 'static/css/bookmarklet.css';
-const minWidth = 250;
-const minHeight = 250;
+var siteUrl = '//127.0.0.1:8080/';
+var styleUrl = siteUrl + 'static/css/bookmarklet.css';
+var minWidth = 250;
+var minHeight = 250;
 
 // load CSS
 var head = document.getElementsByTagName('head')[0];  // Get HTML head element
@@ -23,7 +23,9 @@ body.innerHTML += boxHtml;
 
 function bookmarkletLaunch() {
     bookmarklet = document.getElementById('bookmarklet');
+    console.log(bookmarklet);
     var imagesFound = bookmarklet.querySelector('.images');
+    console.log(imagesFound);
 
     // clear images found
     imagesFound.innerHTML = '';
@@ -31,35 +33,40 @@ function bookmarkletLaunch() {
     bookmarklet.style.display = 'block';
 
     // close event
-    bookmarklet.querySelector('#close')
-        .addEventListener('click', function () {
-            bookmarklet.style.display = 'none'
-        });
+    bookmarklet.querySelector('#close').addEventListener('click', function () {
+        bookmarklet.style.display = 'none';
+    });
 
     // find images in the DOM with the minimum dimensions
-    images = document.querySelectorAll('img[src$=".jpg"], img[src$=".jpeg"], img[src$=".png"]');
-    images.forEach(image => {
-        if (image.naturalWidth >= minWidth
-            && image.naturalHeight >= minHeight) {
+    images = document.querySelectorAll(
+        'img[src$=".jpg"], img[src$=".jpeg"], img[src$=".png"]'
+    );
+    console.log(images);
+    images.forEach((image) => {
+        if (image.naturalWidth >= minWidth && image.naturalHeight >= minHeight) {
             var imageFound = document.createElement('img');
             imageFound.src = image.src;
             imagesFound.append(imageFound);
         }
-    })
+    });
 
     // select image event
-    imagesFound.querySelectorAll('img').forEach(image => {
+    imagesFound.querySelectorAll('img').forEach((image) => {
         image.addEventListener('click', function (event) {
             imageSelected = event.target;
             bookmarklet.style.display = 'none';
-            window.open(siteUrl + 'images/create/?url='
-                + encodeURIComponent(imageSelected.src)
-                + '&title='
-                + encodeURIComponent(document.title),
-                '_blank');
-        })
-    })
+            window.open(
+                siteUrl +
+                'images/create/?url=' +
+                encodeURIComponent(imageSelected.src) +
+                '&title=' +
+                encodeURIComponent(document.title),
+                '_blank'
+            );
+        });
+    });
 }
+
 
 // launch the bookmkarklet
 bookmarkletLaunch();
